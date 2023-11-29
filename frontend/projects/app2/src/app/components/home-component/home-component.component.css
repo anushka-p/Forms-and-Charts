@@ -1,0 +1,15 @@
+@import url(https://unpkg.com/@webpixels/css@1.0/dist/index.css);
+.navbar-nav {
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background-color: #343a40; /* Background color for collapsed nav */
+    }
+  }
+  
+  .nav-item {
+    @media (max-width: 768px) {
+      margin-bottom: 0.5rem; /* Adjust spacing for collapsed nav */
+    }
+  }

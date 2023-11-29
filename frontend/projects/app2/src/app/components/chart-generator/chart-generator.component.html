@@ -1,0 +1,183 @@
+<div class="noselection" *ngIf="!csvHeadings">
+  <p class="msg">
+    <i class="fa fa-frown-o" aria-hidden="true"></i>
+    OOPS!! NO FILE SELECTED YET.....
+  </p>
+</div>
+<div class="container" cdkDropListGroup *ngIf="csvHeadings">
+  <div class="row controls">
+    <div class="col heading">
+      <h2>Controls</h2>
+    </div>
+    <div class="w-100"></div>
+    <div class="col controls-container" cdkDropList>
+      <button
+        class="btn btn-outline-dark btn-sm m-3 custom-btn"
+        *ngFor="let heading of csvHeadings; let i = index"
+        cdkDrag
+        [cdkDragData]="heading"
+      >
+        <i
+          class="fa fa-font fa-lg custom-icon"
+          *ngIf="heading.dataType !== 'number' && heading.dataType !== 'date'"
+        ></i>
+        <i
+          class="fa fa-mobile fa-lg custom-icon"
+          *ngIf="heading.dataType === 'number'"
+        ></i>
+        <i
+          class="fa fa-calendar fa-lg custom-icon"
+          *ngIf="heading.dataType === 'date'"
+        ></i>
+        {{ heading.heading }}
+      </button>
+    </div>
+  </div>
+
+  <div class="row main-area">
+    <!-- axis div  -->
+    <div class="col-3 w-100 axis" id="axis-list">
+      <div class="custom-container">
+        <div class="col-6 customize" (click)="customizeY()">
+          <p>Customize Y-Axis Controls</p>
+        </div>
+        <div class="col-6 customize" (click)="customizeX()">
+          <p>Customize X-Axis Controls</p>
+        </div>
+      </div>
+      
+      <div
+        class="col-6 x-axis"
+        id="x-axis-list"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
+        <p *ngIf="xAxis === ''">Place Your X-Axis Control Here</p>
+        <p *ngIf="xAxis !== ''">{{ xAxis }}</p>
+      </div>
+     
+      <!-- <div class="w-100"></div> -->
+      <div
+        class="col-6 y-axis"
+        id="y-axis-list"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
+        <p *ngIf="yAxis === ''">Place Your Y-Axis Control Here</p>
+        <p *ngIf="yAxis !== ''">{{ yAxis }}</p>
+      </div>
+      
+    </div>
+    <!-- chart div  -->
+    <div class="col-9 chart" id="chart-container">
+      <div class="x-custom" *ngIf="xcustomVisible">
+        <h2>Customize the x-Axis</h2>
+        <label for="labelRotation">Label Rotation:</label>
+        <input type="number" id="labelRotation" [(ngModel)]="labelRotation" />
+
+        <!-- Tick Intervals -->
+        <label for="tickInterval">Tick Interval:</label>
+        <input type="number" id="tickInterval" [(ngModel)]="tickInterval" />
+
+        <!-- Range -->
+        <label for="xAxisMin">Min Value:</label>
+        <input type="number" id="xAxisMin" [(ngModel)]="xAxisMin" />
+        <label for="xAxisMax">Max Value:</label>
+        <input type="number" id="xAxisMax" [(ngModel)]="xAxisMax" />
+
+        <!-- Category vs. Value Axis -->
+        <label for="axisType">Axis Type:</label>
+        <select id="axisType" [(ngModel)]="axisType">
+          <option value="category">Category Axis</option>
+          <option value="value">Value Axis</option>
+        </select>
+
+        <!-- Logarithmic Scale -->
+        <label for="logScale">Logarithmic Scale:</label>
+        <input type="checkbox" id="logScale" [(ngModel)]="logScale" />
+
+        <!-- Reverse Axis -->
+        <label for="reverseAxis">Reverse Axis:</label>
+        <input type="checkbox" id="reverseAxis" [(ngModel)]="reverseAxis" />
+        <button class="btn btn-outline-dark btn-sm m-3" (click)="XDone()">
+          Done
+        </button>
+      </div>
+      <!-- y-axis area  -->
+      <div class="x-custom" *ngIf="ycustomVisible">
+        <h2>Customize the y-Axis</h2>
+        <label for="labelRotation">Label Rotation:</label>
+        <input type="number" id="labelRotation" [(ngModel)]="ylabelRotation" />
+
+        <!-- Tick Intervals -->
+        <label for="tickInterval">Tick Interval:</label>
+        <input type="number" id="tickInterval" [(ngModel)]="ytickInterval" />
+
+        <!-- Range -->
+        <label for="xAxisMin">Min Value:</label>
+        <input type="number" id="xAxisMin" [(ngModel)]="yAxisMin" />
+        <label for="xAxisMax">Max Value:</label>
+        <input type="number" id="xAxisMax" [(ngModel)]="yAxisMax" />
+
+        <!-- Category vs. Value Axis -->
+        <label for="axisType">Axis Type:</label>
+        <select id="axisType" [(ngModel)]="yaxisType">
+          <option value="category">Category Axis</option>
+          <option value="value">Value Axis</option>
+        </select>
+
+        <!-- Logarithmic Scale -->
+        <label for="logScale">Logarithmic Scale:</label>
+        <input type="checkbox" id="logScale" [(ngModel)]="ylogScale" />
+
+        <!-- Reverse Axis -->
+        <label for="reverseAxis">Reverse Axis:</label>
+        <input type="checkbox" id="reverseAxis" [(ngModel)]="reverseAxis" />
+        <button class="btn btn-outline-dark btn-sm m-3" (click)="YDone()">
+          Done
+        </button>
+      </div>
+      <div class="charts-area" *ngIf="isChartVisible">
+        <highcharts-chart
+          *ngIf="chartOptions && type === 'line'"
+          [Highcharts]="highcharts"
+          [options]="chartOptions"
+          style="height: 90%; width: 100%; display: block; z-index: 1"
+        ></highcharts-chart>
+        <highcharts-chart
+          *ngIf="chartOptions && type === 'bar'"
+          [Highcharts]="highcharts"
+          [options]="chartOptions"
+          style="height: 90%; width: 100%; display: block; z-index: 1"
+        ></highcharts-chart>
+        <highcharts-chart
+          *ngIf="chartOptions && type === 'pie'"
+          [Highcharts]="highcharts"
+          [options]="chartOptions"
+          style="height: 90%; width: 100%; display: block; z-index: 1"
+        ></highcharts-chart>
+        <button
+          *ngIf="xdataPoints && ydataPoints"
+          class="btn btn-outline-dark btn-sm m-3"
+          (click)="setline()"
+        >
+          Line
+        </button>
+        <button
+          *ngIf="xdataPoints && ydataPoints"
+          class="btn btn-outline-dark btn-sm m-3"
+          (click)="setbar()"
+        >
+          Bar
+        </button>
+        <button
+          *ngIf="xdataPoints && ydataPoints"
+          class="btn btn-outline-dark btn-sm m-3"
+          (click)="setPie()"
+        >
+          Pie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
