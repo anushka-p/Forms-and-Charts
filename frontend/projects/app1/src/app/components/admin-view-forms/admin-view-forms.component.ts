@@ -55,4 +55,8 @@ export class AdminViewFormsComponent {
       }
       this.successMsg = '';
   }
+  onPageChange(page: number) {
+    console.log(page);
+    
+  }
 }

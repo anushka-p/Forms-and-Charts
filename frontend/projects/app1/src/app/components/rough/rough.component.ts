@@ -1,28 +1,41 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FileUploadServiceService } from '../../services/file-upload-service.service';
+import { FileItem, FileUploader, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-rough',
   templateUrl: './rough.component.html',
   styleUrls: ['./rough.component.css']
 })
-export class RoughComponent implements OnInit {
+export class RoughComponent {
 
-  showDeleteModal = false;
+  public uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:3000/drive/upload-file', // Replace with your server URL
+    itemAlias: 'file',
+    autoUpload: true,
+  });
 
-  openDeleteModal() {
-    this.showDeleteModal = true;
+  constructor() {
+    this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
+      fileItem.withCredentials = false; // You might need to adjust this based on your server setup
+    };
+
+    this.uploader.onProgressItem = (fileItem: FileItem, progress: any) => {
+      console.log(`Upload Progress: ${progress}%`);
+      // Update your progress bar here
+    };
+
+    this.uploader.onSuccessItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+      console.log('File uploaded successfully', JSON.parse(response));
+      // Handle successful upload
+    };
+
+    this.uploader.onErrorItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+      console.error('Error uploading file', JSON.parse(response));
+      // Handle upload error
+    };
+    this.uploader.onProgressAll = (progress: any) => {
+      this.uploader.progress = progress;}
   }
-
-  closeDeleteModal() {
-    this.showDeleteModal = false;
-  }
-
-  deleteItem() {
-    // Implement your delete logic here
-    this.closeDeleteModal(); // Close the modal after deletion
-  }
-ngOnInit(): void {
   
-}
 }

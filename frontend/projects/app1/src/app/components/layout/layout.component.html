@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center">
+<nav class="navbar navbar-expand-lg navbar-light justify-content-center nb">
     <a class="navbar-brand" >Forms App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,22 +8,22 @@
         <!-- <li class="nav-item active" *ngIf="menuType === 'user'">
           <a class="nav-link" routerLink="user-home">User Home<span class="sr-only">(current)</span></a>
         </li> -->
-        <li class="nav-item" *ngIf="menuType !== 'admin-home' && menuType !== 'user'">
+        <li class="nav-item" routerLinkActive="active-link" *ngIf="menuType === 'admin'">
           <a class="nav-link" routerLink="admin-home">Admin Home</a>
         </li>
-        <li class="nav-item"  *ngIf=" menuType === 'admin-home'">
+        <li class="nav-item" routerLinkActive="active-link" *ngIf=" menuType === 'admin'">
           <a class="nav-link" routerLink="admin-home/create-form">Forms</a>
         </li>
-        <li class="nav-item"  *ngIf=" menuType === 'admin-home'">
+        <li class="nav-item" routerLinkActive="active-link" *ngIf=" menuType === 'admin'">
           <a class="nav-link" routerLink="admin-home/view-forms">View Forms</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" type="button" routerLink="" *ngIf="menuType ==='user'">Forms</a>
+        </li> -->
+        <li class="nav-item" routerLinkActive="active-link">
+          <a class="nav-link" type="button" routerLink="user-home" *ngIf="menuType ==='user'">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" type="button" *ngIf="menuType ==='user'">Profile</a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item" routerLinkActive="active-link">
           <a class="nav-link float-end" type="button" (click)="logout()">LogOut</a>
         </li>
       </ul>

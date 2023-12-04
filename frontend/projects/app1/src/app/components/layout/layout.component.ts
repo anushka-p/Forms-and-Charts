@@ -27,11 +27,11 @@ export class LayoutComponent implements OnInit{
           if(localStorage.getItem('token') && val.routerEvent.url.includes('user-home')){
             this.menuType = 'user';
           }
-          else if(localStorage.getItem('token') && val.routerEvent.url.includes('admin-home/')){
+          else if(localStorage.getItem('token') && val.routerEvent.url.includes('admin-home')){
             this.menuType = 'admin';
           }
           else{
-            this.menuType = 'admin-home'
+            this.menuType = 'admin'
           }
         }
       }})

@@ -177,7 +177,7 @@ export class DisplayFormsComponent implements OnInit {
         })
         .subscribe({
           next: (res) => {
-            this.router.navigateByUrl('home/user-home/to-submit-forms');
+            this.router.navigateByUrl('app1/home/user-home/to-submit-forms');
           },
         });
     }

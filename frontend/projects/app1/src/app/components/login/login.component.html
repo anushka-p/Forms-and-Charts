@@ -1,16 +1,21 @@
-<div class="container">
-  <app-error-modal
+<div class="wrapper">
+  <app-error-modal  
     *ngIf="errorMessage"
     [title]="'Dialog Title'"
     (close)="handleClose()"
   >
-    <h2>{{ errorMessage }}</h2>
+    <div body-content><h2>{{ errorMessage }}</h2></div>
   </app-error-modal>
   <div class="screen">
     <div class="screen__content">
       <form class="login" #f="ngForm">
         <div class="login__field">
-          <i class="fa fa-user fa-lg"></i> 
+          <img
+            width="24"
+            height="24"    
+            src="https://img.icons8.com/material-sharp/24/user.png"
+            alt="user"
+          />
           <input
             type="text"
             class="login__input"
@@ -23,7 +28,13 @@
           />
         </div>
         <div class="login__field">
-          <i class="fa fa-lock"></i>
+          <img
+            width="24"
+            height="24"
+            src="https://img.icons8.com/material-rounded/24/lock--v1.png"
+            alt="lock--v1"
+          />
+
           <input
             type="password"
             class="login__input"
@@ -40,17 +51,29 @@
           [disabled]="!f.valid"
         >
           <span class="button__text">Log In Now</span>
-          <i class="button__icon fa fa-chevron-right"></i>
+          <img
+            width="30"
+            height="30"
+            class="button__icon"
+            src="https://img.icons8.com/ios-glyphs/30/circled-chevron-right.png"
+            alt="circled-chevron-right"
+          />
         </button>
         <button class="button login__submit" routerLink="register">
           <span class="button__text">Register</span>
-          <i class="button__icon fa fa-chevron-right"></i>
+          <img
+            width="30"
+            height="30"
+            class="button__icon"
+            src="https://img.icons8.com/ios-glyphs/30/circled-chevron-right.png"
+            alt="circled-chevron-right"
+          />
         </button>
-      </form>
+      </form>   
+      <div class="forgot-pass">
+        <a > Forgot Password?</a>
+      </div>
       <div class="social-login">
-        <!-- <div class="col-md-12"> 
-						<a class="btn btn-sm btn-google btn-block text-uppercase btn-outline g-btn" (click)="onGoogleLogin()">
-							<img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a> </div> -->
         <div
           id="g_id_onload"
           data-client_id="114935174026-vue33dp1c9d494hamomlk1s08taccbd2.apps.googleusercontent.com"

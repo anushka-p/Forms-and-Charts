@@ -40,7 +40,8 @@ async function runMigrations() {
 runMigrations().catch(error => {
   console.error('Error running migrations:', error);
 });
-
+app.use(express.static('dist'));
+ 
 // Define and use port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

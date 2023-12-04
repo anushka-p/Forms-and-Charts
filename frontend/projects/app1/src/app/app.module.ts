@@ -23,7 +23,7 @@ import { ErrorModalComponent } from './components/error-modal/error-modal.compon
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { AdminViewFormsComponent } from './components/admin-view-forms/admin-view-forms.component';
 import { CommonModule } from '@angular/common';
-
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,7 @@ import { CommonModule } from '@angular/common';
     DragDropModule,
     CdkDrag,
     CdkDropList,
-    
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,11 @@
   <div class="parent">
+    <app-error-modal
+    *ngIf="errorMessage"    
+    [title]="'Dialog Title'"
+    (close)="handleClose()"
+  >
+    <div body-content><h2>{{ errorMessage }}</h2></div>
+  </app-error-modal>
   <div class="container">
     <div class="error" *ngIf="errorMessage!== null">
     <span class="details">{{errorMessage}}</span>
@@ -39,7 +46,7 @@
             </ul>
           </div>
         </div>
-       
+        
         <div class="button-container">
           <div class="button" (click)="onRegister()">
             <input type="submit" value="Register">

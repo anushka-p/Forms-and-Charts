@@ -1,0 +1,11 @@
+.nb{
+    background-color: #164863;
+}
+a{
+    color: white;
+}
+
+.active-link {
+    color: black; /* Set your desired active link color */
+    font-weight: bold; /* Set your desired font weight */
+  }

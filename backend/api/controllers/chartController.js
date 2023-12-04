@@ -1,9 +1,5 @@
 const fs = require("fs");
-const readline = require("readline");
-const csv = require("csv-parser");
-// let _ = require("lodash");
 var csvdb = require("node-csv-query").default;
-var databaseConnection = null;
 const getHeadings = (filePath) => {
   return new Promise((resolve, reject) => {
     csvdb(filePath).then(function (db) {
@@ -109,8 +105,11 @@ const getChartData = (req, res) => {
       // console.log(groupedData, "groupdata");         
       // Calculate the sum of y-axis values for each group
       const resultData = _.mapValues(groupedData, group => {
-        const sum = _.sumBy(group, record => parseInt(record[yAxis]));
+        const sum = _.sumBy(group, record =>{const yValue = parseInt(record[yAxis])
+        return isNaN(yValue) ? 0 : yValue});
+       
         return sum;
+        
       });
 
       // Convert the result to arrays for x-axis and y-axis
