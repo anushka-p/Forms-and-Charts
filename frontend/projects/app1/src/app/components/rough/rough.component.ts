@@ -37,5 +37,14 @@ export class RoughComponent {
     this.uploader.onProgressAll = (progress: any) => {
       this.uploader.progress = progress;}
   }
-  
+  formSettings = {
+    theme: 'mobiscroll'
+};
+
+minDate = "2022-01-01";
+maxDate = "2023-12-31";
+date1 = new Date();
+currentYear = this.date1.getUTCFullYear();
+currentMonth = this.date1.getUTCMonth() +1;
+currentDaty = this.date1.getUTCDate();
 }

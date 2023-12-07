@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { HomeComponentComponent } from './components/home-component/home-component.component';
 import { UploadComponent } from './components/upload/upload.component';
 import { ChartGeneratorComponent } from './components/chart-generator/chart-generator.component';
-import {HighchartsChartModule} from 'highcharts-angular'
-import {FormsModule} from '@angular/forms'
+import { HighchartsChartModule } from 'highcharts-angular';
+import { FormsModule } from '@angular/forms';
 
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
 import * as FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -16,13 +16,13 @@ import { LoginComponent } from './components/login/login.component';
 import { CommonModule } from '@angular/common';
 registerPlugin(FilePondPluginFileValidateType);
 
-@NgModule({  
+@NgModule({
   declarations: [
     AppComponent,
     HomeComponentComponent,
     UploadComponent,
     ChartGeneratorComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -31,9 +31,9 @@ registerPlugin(FilePondPluginFileValidateType);
     HttpClientModule,
     DragDropModule,
     HighchartsChartModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [SharedDataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -6,7 +6,7 @@ module.exports= {
     try {
       dbUtils.executeQuery(query, callback);
     } catch (error) {
-      throw error;
+      console.error(error)
     }
   },
   createNewFormSubmission: async (body, callback)=>{
@@ -34,7 +34,6 @@ module.exports= {
       });
     } catch(err) {
       console.error('Error:', err);
-      throw err;
     }
 }
 ,
@@ -62,7 +61,7 @@ module.exports= {
       // Use the executeQuery function from dbUtils
       dbUtils.executeQuery(insertQuery, callback);
     } catch (e) {
-      throw e;
+      console.error(e);
     }
   },
   
@@ -72,7 +71,7 @@ getSubmittedForms: async(id, callback)=>{
     dbUtils.executeQuery(query, callback)
   }catch(err)
   {
-    throw err;
+    console.error(err);
   }
 },
 checkIfUserCanSubmit: (formid, userid, callback) => {
@@ -130,7 +129,31 @@ getFormControlResponse: async(id, formid,submissionId, callback) =>{
     console.log(err);
   }
 },
-
+getParticularFormResponse: async (id, startdate, enddate, callback) => {
+  if (!startdate && !enddate) {
+    try {
+      const query = `SELECT formdata FROM submittedform WHERE formid = ${id}`;
+      dbUtils.executeQuery(query, callback);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    try {
+      console.log(startdate, "startdate");
+      const startTimestamp = new Date(`${startdate}T00:00:00Z`).getTime() / 1000;
+      const endTimestamp = new Date(`${enddate}T23:59:59Z`).getTime() / 1000;
+      console.log(startTimestamp, "start");
+      const query = `
+        SELECT formdata
+        FROM submittedform
+        WHERE formid = ${id}
+        AND submittedat BETWEEN to_timestamp(${startTimestamp}) AND to_timestamp(${endTimestamp})`;
+      dbUtils.executeQuery(query, callback);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+},
 getFormById: async (id, callback) => {
   try {
     const query = `SELECT * FROM forms WHERE id = ${id} AND status <> 'deleted'`;
@@ -164,6 +187,16 @@ deleteFormByid : async (id, callback)=>{
     await dbUtils.executeQuery(query, callback); 
   } catch (e) {
     console.log(e);
+  }
+},
+
+getCsvData: async(id, callback)=>{
+  try{
+    const query = `SELECT formfields FROM forms WHERE id = 34`;
+    dbUtils.executeQuery(query, callback);
+  }catch(e)
+  {
+    console.error(e);
   }
 }
 } 

@@ -108,5 +108,23 @@ table.table .avatar {
     color: #000;
   }
 
+.filter{
+    margin-top: 5px;
+    height: 150px;
+    background-color: #566787;
+    border-radius: 8px;
+}
 
-
+input{
+    margin-top: 15px;
+    margin-left: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.apply-btn{
+    width: 64px;
+    height: 30px;
+    margin-top: 10px;
+    margin-left: 15px;
+    border-radius: 5px;
+}

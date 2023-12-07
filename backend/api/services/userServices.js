@@ -7,7 +7,7 @@ module.exports= {
             dbUtils.executeQuery(query, callback)
           }catch(e)
           {
-            throw e;
+            console.error(e);
           }
     },
 
@@ -63,7 +63,7 @@ module.exports= {
             const query =  `DELETE FROM users WHERE id = ${id}`;
             dbUtils.executeQuery(query, callback);
           }catch(e){
-            throw new Error('User not found')
+            console.error(e)
           }
       }
 }

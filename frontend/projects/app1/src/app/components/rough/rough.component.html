@@ -1,13 +1,13 @@
-<!-- <div class="input-box">
-  <span class="details">Select File</span>
-  <input type="file" (change)="onFileSelected($event)" accept=".txt" />
-  <button (click)="onUpload()">Upload</button>
-</div> -->
-<div>
+
+
+
+<!-- <div>
   <input type="file" ng2FileSelect [uploader]="uploader" />
   <button (click)="uploader.uploadAll()">Upload</button>
 </div>
 <div *ngIf="uploader.progress > 0">
   <p>Upload Progress: {{ uploader.progress }}%</p>
-  <!-- You can use a progress bar component here if you have one -->
-</div>
+</div> -->
+
+From Date Picker: <input type="date" [min]="minDate" [max]="maxDate">
+To Date Picker: <input type="date" [min]="minDate" [max]="maxDate">

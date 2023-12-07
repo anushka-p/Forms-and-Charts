@@ -24,7 +24,8 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { AdminViewFormsComponent } from './components/admin-view-forms/admin-view-forms.component';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
-
+// import { MbscModule } from '@mobiscroll/angular-lite';
+import { Daterangepicker } from 'ng2-daterangepicker';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,19 +44,20 @@ import { FileUploadModule } from 'ng2-file-upload';
     ErrorModalComponent,
     UploadFileComponent,
     AdminViewFormsComponent,
-   
+    
   ],
   imports: [
    CommonModule,
+   FormsModule,
     App1RoutingModule,
-    FormsModule,
     HttpClientModule,
     NgxPaginationModule,
     ReactiveFormsModule,
     DragDropModule,
     CdkDrag,
     CdkDropList,
-    FileUploadModule
+    FileUploadModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

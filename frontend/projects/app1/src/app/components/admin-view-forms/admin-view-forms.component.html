@@ -22,10 +22,11 @@
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th class="col-sm-2">Form ID</th>
+            <th class="col-sm-1">Form ID</th>
             <th class="col-sm-2">Form Title</th>
             <th class="col-sm-2">State</th>
             <th class="col-sm-2">Status</th>
+            <th class="col-sm-2">Export CSV</th>
             <th class="col-sm-4">Actions</th>
           </tr>
         </thead>
@@ -38,6 +39,15 @@
             </td>
             <td>
               {{ form.status }}
+            </td>   
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="exportCsv(form.id, form.title)">Export </button>
+              <div class="filter" *ngIf="filterVisible && selectedForm && selectedForm.id === form.id">
+               <input type="date" [(ngModel)]="selectedStartDate">
+               <input type="date" [(ngModel)]="selectedEndDate">
+               <button class="apply-btn"(click)="applyFilter(form.id, form.title)">Apply</button>
+               <button class="apply-btn" (click)="closeFilter()">Cancel</button>
+              </div>
             </td>
             <td>
               <i class="fa fa-edit" routerLink="{{ form.id }}"></i>
@@ -57,7 +67,8 @@
         class="float-end mb-3 pagination"
       >
       </pagination-controls>
+      
     </div>
   </div>
-  <div></div>
+  
 </div>

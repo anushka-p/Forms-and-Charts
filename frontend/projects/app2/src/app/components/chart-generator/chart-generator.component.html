@@ -32,11 +32,11 @@
         {{ heading.heading }}
       </button>
     </div>
-  </div>
+  </div>   
 
   <div class="row main-area">
     <!-- axis div  -->
-    <div class="col-3 w-100 axis" id="axis-list">
+    <div class="col-3  axis" id="axis-list">
       <div class="custom-container">
         <div class="col-6 customize" (click)="customizeY()">
           <p>Customize Y-Axis Controls</p>
@@ -45,7 +45,7 @@
           <p>Customize X-Axis Controls</p>
         </div>
       </div>
-      
+
       <div
         class="col-6 x-axis"
         id="x-axis-list"
@@ -55,7 +55,7 @@
         <p *ngIf="xAxis === ''">Place Your X-Axis Control Here</p>
         <p *ngIf="xAxis !== ''">{{ xAxis }}</p>
       </div>
-     
+
       <!-- <div class="w-100"></div> -->
       <div
         class="col-6 y-axis"
@@ -66,7 +66,6 @@
         <p *ngIf="yAxis === ''">Place Your Y-Axis Control Here</p>
         <p *ngIf="yAxis !== ''">{{ yAxis }}</p>
       </div>
-      
     </div>
     <!-- chart div  -->
     <div class="col-9 chart" id="chart-container">

@@ -88,7 +88,7 @@ export class AdminService {
 
   getForms(token:string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/form`, {headers});
+    return this.http.get<any>(`${this.apiUrl}/get-form`, {headers});
   }
   deleteFormById(token:string, formid:number){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

@@ -1,4 +1,6 @@
 const adminServices = require("../services/adminServices");
+const util = require('util');
+
 const getAll = async (req, res) => {
   try {
     const { sortBy, state, role, limit, offset, username } = req.query;
@@ -106,44 +108,30 @@ const getSubmittedForm = async (req, res) => {
     throw err;
   }
 };
-const checkIfUserCanSubmit = async(req, res) => {
-  const {  id, formid } = req.body;
-  await adminServices.checkIfUserCanSubmit(formid, id, (err, allowedToSubmit) => {
-    if(!err)
-    {
-      if (allowedToSubmit) {
-        return res.status(200).json({ allowedToSubmit: true });
-      } else {
-        return res.status(200).json({ allowedToSubmit: false });
+const checkIfUserCanSubmit = async (req, res) => {
+  const { id, formid } = req.body;
+  await adminServices.checkIfUserCanSubmit(
+    formid,
+    id,
+    (err, allowedToSubmit) => {
+      if (!err) {
+        if (allowedToSubmit) {
+          return res.status(200).json({ allowedToSubmit: true });
+        } else {
+          return res.status(200).json({ allowedToSubmit: false });
+        }
       }
     }
-    
-  });
+  );
 };
-// const formDate = async (req, res) => {
-//   try {
-//     const id = req.params.userid;
-//     await adminServices.getFormDate(id, (err, results) => {
-//       if (err) {
-//         console.log(err);
-//         return res.status(500).json({ message: "Database connection error" });
-//       }
-//       return res.status(200).json({
-//         data: results.rows,
-//         message: "Retrieved successfully",
-//       });
-//     });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+
 
 const otherFormSubmission = async (req, res) => {
   try {
     const id = req.params.id;
     const userid = req.params.userid;
-    
-    await adminServices.getOtherFormSubmission(id,userid, (err, results) => {
+
+    await adminServices.getOtherFormSubmission(id, userid, (err, results) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: "Database connection error" });
@@ -163,31 +151,43 @@ const formControlResponse = async (req, res) => {
     const id = req.params.userid;
     const formid = req.params.formid;
     const submissionId = req.params.submissionId;
-    if(submissionId)
-    {
-      await adminServices.getFormControlResponse(id, formid, submissionId, (err, results) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({ message: "Database connection error" });
+    if (submissionId) {
+      await adminServices.getFormControlResponse(
+        id,
+        formid,
+        submissionId,
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .json({ message: "Database connection error" });
+          }
+          return res.status(200).json({
+            data: results.rows,
+            message: "Retrieved successfully",
+          });
         }
-        return res.status(200).json({
-          data: results.rows,
-          message: "Retrieved successfully",
-        });
-      });
+      );
+    } else {
+      await adminServices.getFormControlResponse(
+        id,
+        formid,
+        undefined,
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            return res
+              .status(500)
+              .json({ message: "Database connection error" });
+          }
+          return res.status(200).json({
+            data: results.rows,
+            message: "Retrieved successfully",
+          });
+        }
+      );
     }
-   else{
-    await adminServices.getFormControlResponse(id, formid,undefined, (err, results) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({ message: "Database connection error" });
-      }
-      return res.status(200).json({
-        data: results.rows,
-        message: "Retrieved successfully",
-      });
-    });
-   }
   } catch (err) {
     throw err;
   }
@@ -231,13 +231,10 @@ const getForm = async (req, res) => {
         if (err) {
           return res.status(500).json({ message: "Database connection error" });
         }
-
         const data = results.rows.map((form) => {
           const { formfields, ...rest } = form;
-
           return rest;
         });
-
         return res.status(200).json({
           data,
         });
@@ -293,6 +290,85 @@ const deleteForm = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+const data = {
+  key: "value",
+  key2: "value2",
+  key3: "value3",
+};
+
+
+const getFormByIdAsync = util.promisify(adminServices.getFormById);
+const getParticularFormResponseAsync = util.promisify(adminServices.getParticularFormResponse);
+
+const downloadCsv = async (req, res) => {
+  try {
+    const formid = req.body.id;
+    const startdate = req.body.startDate;
+    const enddate = req.body.endDate;
+
+    const formStructureResponse = await getFormByIdAsync(formid);
+    const formStructure = formStructureResponse.rows[0].formfields.controls;
+    const formResponsesResponse = await getParticularFormResponseAsync(formid, startdate, enddate);
+    const formResponses = formResponsesResponse.rows;
+    console.log("formres", formResponses);
+    const controlMap = {};
+    formStructure.forEach((control) => {
+      const controlId = control.id;
+      const controlType = control.type;
+      if (controlType === 'radio' || controlType === 'dropdown') {
+        const options = control.options.reduce((acc, option) => {
+          acc[option.id] = option.value;
+          return acc;
+        }, {});
+        controlMap[controlId] = options;
+      } else if (controlType === 'checklist') {
+        controlMap[controlId] = control.options.map(option => option.value);
+      } else {
+        controlMap[controlId] = null; 
+      }
+    });
+  const csvData = formResponses.map((response) => {
+  const formData = response.formdata;
+  const rowData = formStructure.map((control) => {
+    const controlId = control.id;
+    const controlType = control.type;
+    const controlKey = `${controlId} - ${control.label}`;
+
+    if (controlType === 'radio' || controlType === 'dropdown') {
+      const selectedId = formData[controlKey];
+      return controlMap[controlId][selectedId] || '';
+    } else if (controlType === 'checklist') {
+      const selectedIds = formData[controlKey];
+      if (Array.isArray(selectedIds)) {
+        return controlMap[controlId].join(',');
+      } else {
+        return '';
+      }
+    } else {
+      return formData[controlKey] || '';
+    }
+  });
+  return rowData.join(',');
+});
+    const csvHeading = formStructure.map((control) => control.label);
+    csvData.unshift(csvHeading.join(','));
+    const csvString = csvData.join('\n');
+    res.send(csvString);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}; 
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
   getAll,
@@ -304,6 +380,6 @@ module.exports = {
   getSubmittedForm,
   formControlResponse,
   otherFormSubmission,
-  checkIfUserCanSubmit
-  // formDate
+  checkIfUserCanSubmit,
+  downloadCsv,
 };

@@ -1,11 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
 import offlineExporting from 'highcharts/modules/offline-exporting';
 import { SharedDataService } from '../../services/shared-data.service';
-
 HC_exporting(Highcharts);
 offlineExporting(Highcharts);
 @Component({
@@ -22,25 +21,25 @@ export class ChartGeneratorComponent implements OnInit {
   ydataPoints!: any;
   type: string = '';
   highcharts: typeof Highcharts = Highcharts;
-  chartOptions: any;
+  chartOptions!: any;
   //new
   labelRotation: number = 0;
-  tickInterval: number = 1;
-  xAxisMin: number = 0; 
-  xAxisMax: number = 100; 
-  axisType: string = 'category'; 
+  tickInterval: number = 0;
+  xAxisMin!: number;
+  xAxisMax!: number;
+  axisType: string = 'category';
   logScale: boolean = false;
   reverseAxis: boolean = false;
-  xcustomVisible:boolean = false;
-  isChartVisible:boolean = false;
-  ycustomVisible:boolean = false;
+  xcustomVisible: boolean = false;
+  isChartVisible: boolean = false;
+  ycustomVisible: boolean = false;
   ylabelRotation: number = 0;
-  ytickInterval: number = 1;
-  yAxisMin!: number; 
-  yAxisMax!: number; 
-  yaxisType: string = 'category'; 
+  ytickInterval: number = 0;
+  yAxisMin!: number;
+  yAxisMax!: number;
+  yaxisType: string = 'category';
   ylogScale: boolean = false;
-  
+
   constructor(
     private sharedDataService: SharedDataService,
     private http: HttpClient
@@ -56,7 +55,14 @@ export class ChartGeneratorComponent implements OnInit {
       this.type = 'line';
       this.chartOptions = {
         chart: {
+          zoomType: 'xy',
           type: this.type,
+          scrollbar:{
+            enabled:true
+          }
+        },
+        rangeSelector: {
+          enabled: true,
         },
         title: {
           text: 'Demo chart',
@@ -71,31 +77,41 @@ export class ChartGeneratorComponent implements OnInit {
           },
         },
         xAxis: {
+          scrollbar: {
+            enabled: true,
+            showFull: false
+        },
           categories: this.xdataPoints,
           labels: {
+            formatter: function() {
+              return '<p style="color:red">' + this.value 
+            },
             style: {
               color: 'black',
-              rotation: this.labelRotation + 'deg', 
+              rotation: this.labelRotation + 'deg',
             },
           },
-          tickInterval: this.tickInterval, 
-          type: this.axisType, 
-          min: this.xAxisMin, 
-          max: this.xAxisMax, 
+          tickInterval: this.tickInterval,
+          type: this.axisType,
+          min: this.xAxisMin,
+          max: this.xAxisMax,
         },
         yAxis: {
           text: 'Temperature',
           labels: {
+            formatter: function() {
+              return '<p style="color:red">' + this.value
+            },
             style: {
               color: 'black',
-              rotation: this.ylabelRotation + 'deg', 
+              rotation: this.ylabelRotation + 'deg',
             },
           },
-          tickInterval: this.ytickInterval, 
-          type: this.yaxisType, 
-          min: this.yAxisMin, 
+          tickInterval: this.ytickInterval,
+          type: this.yaxisType,
+          min: this.yAxisMin,
           max: this.yAxisMax,
-          reversed: this.reverseAxis, 
+          reversed: this.reverseAxis,
         },
         exporting: {
           chartOptions: {
@@ -113,16 +129,11 @@ export class ChartGeneratorComponent implements OnInit {
         credits: {
           enabled: false,
         },
-        scrollbar: {
-          enabled: true,
-        },
-        navigator: {
-          enabled: true,
-        },
-        rangeselector: {
-          enabled: true,
-        },
-      }; this.isChartVisible = true;
+        scrollbar:{
+          enabled:true
+        }
+      };
+      this.isChartVisible = true;
     } else if (type === 'bar') {
       this.type = 'bar';
       this.chartOptions = {
@@ -173,16 +184,11 @@ export class ChartGeneratorComponent implements OnInit {
         credits: {
           enabled: false,
         },
-        scrollbar: {
-          enabled: true,
-        },
-        navigator: {
-          enabled: true,
-        },
-        rangeselector: {
-          enabled: true,
-        },
-      }; this.isChartVisible = true;
+        scrollbar:{
+          enabled:true
+        }
+      };
+      this.isChartVisible = true;
     } else if (type === 'pie') {
       const pieChartData = this.xdataPoints.map(
         (label: string, index: number) => ({
@@ -218,7 +224,7 @@ export class ChartGeneratorComponent implements OnInit {
       (response: any) => {
         this.xdataPoints = response.xaxisPoints;
         this.ydataPoints = response.yaxisPoints;
-        this.generateChart('line')
+        this.generateChart('line');
       },
       (error) => {
         console.error('Error sending axes to backend:', error);
@@ -231,7 +237,10 @@ export class ChartGeneratorComponent implements OnInit {
     } else if (event.container.id === 'y-axis-list') {
       console.log(event.item.data.dataType);
 
-      if (event.item.data.dataType !== 'number' && event.item.data.dataType !== 'date') {
+      if (
+        event.item.data.dataType !== 'number' &&
+        event.item.data.dataType !== 'date'
+      ) {
         alert(
           'Y-Axis can only have numeric values. Please Select a numeric field'
         );
@@ -264,13 +273,11 @@ export class ChartGeneratorComponent implements OnInit {
     this.isChartVisible = false;
     this.ycustomVisible = !this.ycustomVisible;
   }
-  XDone()
-  {
+  XDone() {
     this.xcustomVisible = !this.xcustomVisible;
     this.generateChart('line');
   }
-  YDone()
-  {
+  YDone() {
     this.ycustomVisible = !this.ycustomVisible;
     this.generateChart('line');
   }
