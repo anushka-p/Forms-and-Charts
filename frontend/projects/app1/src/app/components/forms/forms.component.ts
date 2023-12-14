@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {jwtDecode} from 'jwt-decode';
-import { v4 as uuidv4 } from 'uuid';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../services/admin.services';
 import { AddControlsService } from '../../services/addcontrols.services';
@@ -14,7 +13,6 @@ import { AddControlsService } from '../../services/addcontrols.services';
 })
 export class FormsComponent implements OnInit {
   reactiveForm!: FormGroup;
-
   createdby: string = '';
   updatedby: string = '';
   version!: number;
@@ -59,7 +57,7 @@ export class FormsComponent implements OnInit {
                     optionsArray.clear(); // Clear any existing options
                 
                     for (const option of field.options) {
-                      const optionGroup = this.createOption();
+                      const optionGroup = this.addControlsService.createOption();
                       optionGroup.patchValue({ value: option.value }); // Set the option value
                       optionsArray.push(optionGroup);
                     }
@@ -88,45 +86,14 @@ export class FormsComponent implements OnInit {
     });
 
   }
-
-  addTextControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createTextControl());
-  }
-
-  addNumericControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createNumericControl());
-  }
-  addDropdownControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createDropdownControl());
-  }
-  addCheckboxControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createCheckboxControl());
-  }
   removeControl(index: number) {
     const controlsArray = this.reactiveForm.get('controls') as FormArray;
     controlsArray.removeAt(index);
   }
-  addTextareaControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createTextareaControl());
-  }
-  createOption() {
-    const optionUuid = uuidv4(); // Generate a unique ID for the option
-    return this.fb.group({
-      id: optionUuid,
-      value: [null, Validators.required], // Assuming the option has a 'value'
-    });
-  }
-
   addOption(control: FormGroup) {
     const optionsArray = control.get('options') as FormArray;
-    optionsArray.push(this.createOption());
+    optionsArray.push(this.addControlsService.createOption());
   }
-
   removeOption(control: FormGroup, index: number) {
     const optionsArray = control.get('options') as FormArray;
     optionsArray.removeAt(index);
@@ -135,22 +102,12 @@ export class FormsComponent implements OnInit {
   confirmLabel(control: FormGroup) {
     control.get('labelConfirmed').setValue(true);
   }
-  addChecklistControl() {
-    const controlsArray = this.reactiveForm.get('controls') as FormArray;
-    controlsArray.push(this.addControlsService.createChecklistControl());
-  }
-  addChecklistOption(control: FormGroup) {
-    const optionsArray = control.get('options') as FormArray;
-    optionsArray.push(this.createOption());
-  }
-
   onSubmit() {
-    this.formSubmitted = true; // Set the form as submitted
-
+    this.formSubmitted = true; 
   const controlsArray = this.reactiveForm.get('controls') as FormArray;
   if (controlsArray.length === 0) {
     this.successMsg = 'Please add at least one control.';
-    return; // Prevent form submission
+    return; 
   }
   for (const control of controlsArray.controls) {
     const controlType = control.get('type').value;
@@ -158,12 +115,12 @@ export class FormsComponent implements OnInit {
 
     if (!labelConfirmed) {
       this.successMsg = 'Please confirm the label for all controls.';
-      return; // Prevent form submission
+      return; 
     }
 
     if ((controlType === 'radio' || controlType === 'dropdown'|| controlType === 'checklist') && !control.get('options').value.length) {
       this.successMsg = 'Please add at least one option for radio, dropdown and checklist controls.';
-      return; // Prevent form submission
+      return; 
     }
     else{
       const optionsArray = control.get('options') as FormArray;
@@ -173,15 +130,13 @@ export class FormsComponent implements OnInit {
           const optionLabel = option.get('value').value; 
           if (!optionLabel) {
             this.successMsg = 'Please provide a label for all options of radio or dropdown controls.';
-            return; // Prevent form submission
+            return; 
           }
         }
       }
       
     }
   }
-
-  // Check if the required fields are not empty
   if(
     this.reactiveForm.get('title').value &&
     this.reactiveForm.get('description').value &&
@@ -229,7 +184,6 @@ export class FormsComponent implements OnInit {
           },
         });
       }
-     
     }
   }
   else{
@@ -263,8 +217,6 @@ export class FormsComponent implements OnInit {
     }
     return null;
   }
-
-  onCheckboxChange() {}
   handleClose() {
     if(this.successMsg === 'Form Created Successfully'|| this.successMsg === 'Form Edited Successfully')
     {
@@ -274,6 +226,5 @@ export class FormsComponent implements OnInit {
     }else{
       this.successMsg = '';
     }
-   
   }
 }

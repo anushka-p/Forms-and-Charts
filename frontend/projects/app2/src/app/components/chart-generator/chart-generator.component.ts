@@ -39,12 +39,15 @@ export class ChartGeneratorComponent implements OnInit {
   yAxisMax!: number;
   yaxisType: string = 'category';
   ylogScale: boolean = false;
-
+  filename!:string;
   constructor(
     private sharedDataService: SharedDataService,
     private http: HttpClient
   ) {}
   ngOnInit(): void {
+    this.sharedDataService.csvFileNameSubject.subscribe({next:(res)=>{
+      this.filename = res;
+    }})
     this.sharedDataService.csvHeadingsSubject.subscribe((response: any) => {
       this.csvHeadings = response.columnInfo;
       this.fileId = response.fileId;
@@ -83,8 +86,16 @@ export class ChartGeneratorComponent implements OnInit {
         },
           categories: this.xdataPoints,
           labels: {
-            formatter: function() {
-              return '<p style="color:red">' + this.value 
+            formatter: function () {
+              let dateValue = this.value;
+              if (typeof dateValue === 'string') {
+                dateValue = new Date(dateValue);
+              }
+              if (dateValue instanceof Date && !isNaN(dateValue.getTime())) {
+                const month = dateValue.getDate();
+                return month; 
+              }
+              return this.value;
             },
             style: {
               color: 'black',
@@ -235,8 +246,6 @@ export class ChartGeneratorComponent implements OnInit {
     if (event.container.id === 'x-axis-list') {
       this.xAxis = event.item.data.heading;
     } else if (event.container.id === 'y-axis-list') {
-      console.log(event.item.data.dataType);
-
       if (
         event.item.data.dataType !== 'number' &&
         event.item.data.dataType !== 'date'
@@ -268,6 +277,7 @@ export class ChartGeneratorComponent implements OnInit {
   customizeX() {
     this.isChartVisible = false;
     this.xcustomVisible = !this.xcustomVisible;
+
   }
   customizeY() {
     this.isChartVisible = false;

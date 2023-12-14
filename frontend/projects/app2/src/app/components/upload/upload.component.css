@@ -38,9 +38,13 @@
   }
   .icon-div{
     margin-top: 20px; 
-    border: 1px solid black;
-    height: 40px;
+    /* border: 1px solid black; */
+    /* height: 40px; */
+    width: 100px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
   .icon{
     padding: 4px;
@@ -48,7 +52,6 @@
   .option{
     padding: 5px;
     height: 35px;
-    cursor: pointer;
   }
   .option:nth-child(even) {
     background-color: rgb(216, 211, 211);
@@ -62,4 +65,8 @@
   }
   .add{
     height: 50px;
+  }
+  .check-icon{
+    border: 1px solid black;
+    width: 50px;
   }

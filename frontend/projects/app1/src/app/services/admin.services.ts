@@ -65,7 +65,7 @@ export class AdminService {
 
   createFormResponse(token: string, {formresponse, submittedby, formid}:any){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.post<any>(`${this.apiUrl}submit-new-form/${formid}`,
+    return this.http.post<any>(`${this.userUrl}/submit-new-form/${formid}`,
     {formresponse, submittedby}, {headers})
   }
   getSubmittedForms(token:string, id:number){
@@ -86,9 +86,9 @@ export class AdminService {
     return this.http.post<any>(`${this.apiUrl}check-ability`, {id, formid}, {headers})
   }
 
-  getForms(token:string){
+  getForms(token:string, limit:number, offset:number){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/get-form`, {headers});
+    return this.http.get<any>(`${this.apiUrl}get-form/${limit}/${offset}`, {headers});
   }
   deleteFormById(token:string, formid:number){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -96,6 +96,6 @@ export class AdminService {
   }
   getOtherSubmission(token:string, id:number, userid:number){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<any>(`${this.apiUrl}/other-submissions/${id}/${userid}`, {headers});
+    return this.http.get<any>(`${this.userUrl}/other-submissions/${id}/${userid}`, {headers});
   }
 }

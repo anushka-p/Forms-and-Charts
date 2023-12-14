@@ -1,25 +1,45 @@
 <div class="container">
   <label> Add Your CSV File OR Select From Previous CSV Files:</label>
-  <div class="buttondiv"> 
-    <button class="btn btn-primary m-4 add" (click)="setDragandDrop()">Drop or Select New</button>
-    <button class="btn btn-primary m-4 add" (click)="setSelect()">Select from existing</button>
+  <div class="buttondiv">
+    <button class="btn btn-primary m-4 add" (click)="setDragandDrop()">
+      Drop or Select New
+    </button>
+    <button class="btn btn-primary m-4 add" (click)="setSelect()">
+      Select from existing
+    </button>
   </div>
- 
+
   <div class="main" *ngIf="isDropvisible">
-    <file-pond class="filepond"
+    <file-pond
+      class="filepond"
       #myPond
       [options]="pondOptions"
       (oninit)="pondHandleInit()"
     >
     </file-pond>
   </div>
- 
+
   <div class="select" *ngIf="isSelectvisible">
-    <label for="csvFiles" class="droplabel">Select From Previous CSV Files:</label>
+    <label for="csvFiles" class="droplabel"
+      >Select From Previous CSV Files:</label
+    >
     <select size="2" id="csvFiles" [(ngModel)]="selectedCsvFile" class="dp">
-      <option *ngFor="let file of availableCsvFiles" [value]="file" class="option">{{ file }}</option>
+      <option
+        *ngFor="let file of availableCsvFiles"
+        [value]="file"
+        class="option"
+      >
+        <span>{{ file }}</span>
+      </option>
     </select>
-    <div class="icon-div">    <i class="fa fa-check fa-lg icon" (click)="add()"></i>
+    <div class="icon-div">
+      <div class="check-icon">
+        <i class="fa fa-check fa-lg icon" (click)="add()"></i>
+      </div>
+      <button (click)="editSelect()">Edit</button>
     </div>
+  </div>
+  <div class="select" *ngIf="!isSelectvisible && isEditVisible">
+
   </div>
 </div>

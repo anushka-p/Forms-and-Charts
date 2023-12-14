@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AddControlsService {
   constructor(private fb: FormBuilder) {}
-
   createTextControl(): FormGroup {
     const controlUuid = uuidv4();
     return this.fb.group({

@@ -6,6 +6,35 @@ a{
 }
 
 .active-link {
-    color: black; /* Set your desired active link color */
-    font-weight: bold; /* Set your desired font weight */
+  background-color: gray;
   }
+  nav{
+    margin: 19px;
+    border-radius: 5px;
+  }
+  .navbar-brand{
+    margin-left: 10px;
+    font-weight: bold;
+  }
+  .navbar-main{
+    margin-left: 15px;
+    padding: 5px;
+    display: flex;
+    /* justify-content:stretch; */
+  }
+
+  .aclass{
+    color: white;
+    margin-left: 10px;
+    padding: 5px;
+  }
+ .last{
+  margin-left: 20%;
+  display: flex;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+ }
+ .navbarul{
+  width: 80%;
+ }

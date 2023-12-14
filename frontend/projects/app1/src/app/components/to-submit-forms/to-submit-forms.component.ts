@@ -9,15 +9,32 @@ import { AdminService } from '../../services/admin.services';
 })
 export class ToSubmitFormsComponent implements OnInit {
   forms: any = [];
+  currentPage:number=1;
+  itemsPerPage:number=5;
+  offset: number = 0;
+  totalItems: number = 0;
   formValidityMap: Map<number, boolean> = new Map(); // Store form validity
 
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
+   this.loadforms();
+  }
+  onPageChange(page: number) {
+    console.log(page);
+    this.currentPage = page;
+    this.loadforms();
+  }
+  onItemsPerPageChange() {
+    this.currentPage = 1; 
+    this.loadforms(); 
+  }
+  loadforms()
+  {
     const token = localStorage.getItem('token');
-
+    this.offset = ((this.currentPage - 1) * this.itemsPerPage);
     if (token) {
-      this.adminService.getForms(token).subscribe({
+      this.adminService.getForms(token, null , null).subscribe({
         next: (response) => {
           if (Array.isArray(response.data)) {
             this.forms = [...response.data];

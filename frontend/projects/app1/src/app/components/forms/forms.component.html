@@ -73,13 +73,12 @@
           value=""
           id="flexCheckChecked"
           formControlName="isChecked"
-          (change)="onCheckboxChange()"
           checked
         />
         <label for="flexCheckChecked">Include a date in the Form?</label>
       </div>
 
-      <div formArrayName="controls">
+      <div formArrayName="controls" >
         <ng-container
           *ngFor="
             let control of reactiveForm.get('controls')['controls'];

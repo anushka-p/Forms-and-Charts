@@ -23,7 +23,7 @@ export class UploadComponent {
   headings!:any;
   isDropvisible:boolean = false;
   isSelectvisible:boolean = false;
-
+  isEditVisible:boolean = false;
   pondOptions = {
     allowMultiple: true,
     labelIdle: 'Drop files here or Select',
@@ -102,4 +102,10 @@ export class UploadComponent {
     this.isDropvisible = false;
     this.isSelectvisible = true;
   }
+ editSelect()
+ {
+  console.log("delete");
+  this.isEditVisible = true;
+  this.isSelectvisible = false;
+ }
 }

@@ -1,9 +1,21 @@
-<div class="main">
-  <button type="button" (click)="one()" class="btn btn-primary">
-    Go To Forms App
+<div class="main" *ngIf="isvisible">
+  <button type="button" (click)="one()" class="btn btn-primary primary btn-left">
+    Go To Forms App :
+    <img
+      width="50"
+      height="50"
+      src="https://img.icons8.com/windows/32/google-forms.png"
+      alt="google-forms"
+    />
   </button>
-  <button type="button" (click)="two()" class="btn btn-secondary">
-    Go To Charts App
+  <button type="button" (click)="two()" class="btn btn-primary primary btn-right">
+    Go To Charts App :
+    <img
+      width="50"
+      height="50"
+      src="https://img.icons8.com/ios-glyphs/30/combo-chart--v1.png"
+      alt="combo-chart--v1"
+    />
   </button>
 </div>
 <div class="wrapper">

@@ -50,7 +50,7 @@ export class EditOrCreateUserComponent implements OnInit, OnDestroy {
         )
         .subscribe({
           next: (response) => {
-            this.router.navigateByUrl('home/admin-home');
+            this.router.navigateByUrl('app1/home/admin-home');
           },
           error: (err) => {
             console.log(err);

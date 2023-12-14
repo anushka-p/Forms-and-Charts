@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { AdminService } from '../../services/admin.services';
 
 @Component({
@@ -23,7 +23,7 @@ export class DisplayFormsComponent implements OnInit {
   formresponse: any = {};
   submittedby!: any;
   isfilled!: boolean;
-  createdAt!: number;
+  createdAt!: any;
   errorMessage: string = '';
   isFormFilled: boolean = true;
   selectedOption: any;
@@ -45,7 +45,10 @@ export class DisplayFormsComponent implements OnInit {
           next: (response) => {
             this.formData = response.data;
             this.controlsArray = this.formData.formfields.controls;
-            this.createdAt = this.formData.createdat;
+            //conversion of timestamp
+            const timestamp = new Date(this.formData.createdat);
+            const datePart = timestamp.toISOString().split('T')[0];
+            this.createdAt = datePart;
             const decoded: any = jwtDecode(token);
             this.submittedby = decoded.user_id;
 
@@ -58,7 +61,7 @@ export class DisplayFormsComponent implements OnInit {
               )
               .subscribe({
                 next: (res) => {
-                  let controlData:any;
+                  let controlData: any;
                   if (this.mode === 'edit') {
                     controlData = res.data[0]?.formdata || {};
                   } else if (
@@ -71,13 +74,13 @@ export class DisplayFormsComponent implements OnInit {
                   }
                   if (Object.keys(controlData).length !== 0) {
                     this.isfilled = true;
-                    this.controlsArray.forEach((control:any) => {
+                    this.controlsArray.forEach((control: any) => {
                       const key = `${control.id} - ${control.label}`;
                       if (key in controlData)
                         if (control.type === 'checklist') {
                           // For a checklist, set selected property for options
                           const selectedOptionIds = controlData[key];
-                          control.options.forEach((option:any) => {
+                          control.options.forEach((option: any) => {
                             option.selected = selectedOptionIds.includes(
                               option.id
                             );
@@ -88,7 +91,7 @@ export class DisplayFormsComponent implements OnInit {
                     });
 
                     // Set selectedOption for radio buttons
-                    this.controlsArray.forEach((control:any) => {
+                    this.controlsArray.forEach((control: any) => {
                       const key = `${control.id} - ${control.label}`;
                       if (control.type === 'radio') {
                         if (key in controlData) {
@@ -97,7 +100,7 @@ export class DisplayFormsComponent implements OnInit {
                         }
                       }
                     });
-                    this.controlsArray.forEach((control:any) => {
+                    this.controlsArray.forEach((control: any) => {
                       const key = `${control.id} - ${control.label}`;
                       if (control.type === 'dropdown') {
                         if (key in controlData) {
@@ -142,10 +145,12 @@ export class DisplayFormsComponent implements OnInit {
       } else if (control.type === 'checklist') {
         // For a checklist, we need to handle multiple selected options
         const selectedOptions = control.options.filter(
-          (option:any) => option.selected
+          (option: any) => option.selected
         );
         if (selectedOptions.length > 0) {
-          this.formresponse[key] = selectedOptions.map((option:any) => option.id);
+          this.formresponse[key] = selectedOptions.map(
+            (option: any) => option.id
+          );
         } else {
           this.isFormFilled = false;
         }

@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { App1RoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -15,7 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsComponent } from './components/forms/forms.component';
 import { RoughComponent } from './components/rough/rough.component';
 import { CdkDrag, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { SubmittedFormsComponent } from './components/submitted-forms/submitted-forms.component';
+// import { SubmittedFormsComponent } from './components/submitted-forms/submitted-forms.component';
 import { ToSubmitFormsComponent } from './components/to-submit-forms/to-submit-forms.component';
 import { DisplayFormsComponent } from './components/display-forms/display-forms.component';
 import { OtherSubmissionsComponent } from './components/other-submissions/other-submissions.component';
@@ -24,8 +22,7 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { AdminViewFormsComponent } from './components/admin-view-forms/admin-view-forms.component';
 import { CommonModule } from '@angular/common';
 import { FileUploadModule } from 'ng2-file-upload';
-// import { MbscModule } from '@mobiscroll/angular-lite';
-import { Daterangepicker } from 'ng2-daterangepicker';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,14 +34,12 @@ import { Daterangepicker } from 'ng2-daterangepicker';
     EditOrCreateUserComponent,
     RoughComponent,
     FormsComponent,
-    SubmittedFormsComponent,
     ToSubmitFormsComponent,
     DisplayFormsComponent,
     OtherSubmissionsComponent,
     ErrorModalComponent,
     UploadFileComponent,
     AdminViewFormsComponent,
-    
   ],
   imports: [
    CommonModule,

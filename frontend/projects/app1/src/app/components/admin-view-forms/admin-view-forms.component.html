@@ -31,7 +31,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let form of forms">
+          <tr
+            *ngFor="
+              let form of forms
+                | paginate
+                  : {
+                      itemsPerPage: itemsPerPage,
+                      currentPage: currentPage,
+                      totalItems: totalItems
+                    }
+            "
+          >
             <td>{{ form.id }}</td>
             <td>{{ form.title }}</td>
             <td>
@@ -39,14 +49,32 @@
             </td>
             <td>
               {{ form.status }}
-            </td>   
+            </td>
             <td>
-              <button class="btn btn-primary btn-sm" (click)="exportCsv(form.id, form.title)">Export </button>
-              <div class="filter" *ngIf="filterVisible && selectedForm && selectedForm.id === form.id">
-               <input type="date" [(ngModel)]="selectedStartDate">
-               <input type="date" [(ngModel)]="selectedEndDate">
-               <button class="apply-btn"(click)="applyFilter(form.id, form.title)">Apply</button>
-               <button class="apply-btn" (click)="closeFilter()">Cancel</button>
+              <img
+                width="40"
+                height="40"
+                src="https://img.icons8.com/ios/50/export-csv.png"
+                (click)="exportCsv(form.id, form.title)"
+                alt="export-csv"
+              />
+              <div
+                class="filter"
+                *ngIf="
+                  filterVisible && selectedForm && selectedForm.id === form.id
+                "
+              >
+                <input type="date" [(ngModel)]="selectedStartDate" />
+                <input type="date" [(ngModel)]="selectedEndDate" />
+                <button
+                  class="apply-btn"
+                  (click)="applyFilter(form.id, form.title)"
+                >
+                  Apply
+                </button>
+                <button class="apply-btn" (click)="closeFilter()">
+                  Cancel
+                </button>
               </div>
             </td>
             <td>
@@ -62,13 +90,25 @@
           </tr>
         </tbody>
       </table>
-      <pagination-controls
-        (pageChange)="onPageChange($event)"
-        class="float-end mb-3 pagination"
-      >
-      </pagination-controls>
-      
+      <div class="pagination">
+        <div class="items-per-page-dropdown">
+          <label for="itemsPerPage">Items Per Page:</label>
+          <select
+            id="itemsPerPage"
+            [(ngModel)]="itemsPerPage"
+            (change)="onItemsPerPageChange()"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <pagination-controls
+          (pageChange)="onPageChange($event)"
+          class="float-end mb-3 page-controls"
+        >
+        </pagination-controls>
+      </div>
     </div>
   </div>
-  
 </div>

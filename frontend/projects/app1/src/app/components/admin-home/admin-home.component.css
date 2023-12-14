@@ -10,6 +10,8 @@
     margin: 30px 0;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    height: 740px;
+    overflow: auto;
 }
 .table-title {        
     padding-bottom: 15px;
@@ -73,40 +75,23 @@ table.table td:last-child i {
     font-size: 15px;
     margin: 0 5px;
 }
-table.table td a {
-    font-weight: bold;
-    color: #566787;
-    display: inline-block;
-    text-decoration: none;
-    outline: none !important;
-}
-table.table td a:hover {
-    color: #2196F3;
-}
-table.table td a.edit {
-    color: #FFC107;
-}
-table.table td a.delete {
-    color: #F44336;
-}
-table.table td i {
-    font-size: 19px;
-}
-table.table .avatar {
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 10px;
-}
-.input-group-text {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #ccc;
-  }
-  
-  .input-group-text:hover {
-    color: #000;
-  }
 
-
+  .pagination{
+    display: flex;
+    justify-content: flex-end;
+}
+.items-per-page-dropdown{
+    width: 250px;
+    font-size: 18px;
+    margin: 3px;
+}
+select{
+    margin-left: 10px;
+    width: 50px;
+}
+.page-controls{
+    padding: 5px;
+    color: gray;
+}
+       
 

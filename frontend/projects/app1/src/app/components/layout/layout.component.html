@@ -1,37 +1,82 @@
-<nav class="navbar navbar-expand-lg navbar-light justify-content-center nb">
-    <a class="navbar-brand" >Forms App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <!-- <li class="nav-item active" *ngIf="menuType === 'user'">
-          <a class="nav-link" routerLink="user-home">User Home<span class="sr-only">(current)</span></a>
-        </li> -->
-        <li class="nav-item" routerLinkActive="active-link" *ngIf="menuType === 'admin'">
-          <a class="nav-link" routerLink="admin-home">Admin Home</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active-link" *ngIf=" menuType === 'admin'">
-          <a class="nav-link" routerLink="admin-home/create-form">Forms</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active-link" *ngIf=" menuType === 'admin'">
-          <a class="nav-link" routerLink="admin-home/view-forms">View Forms</a>
-        </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" type="button" routerLink="" *ngIf="menuType ==='user'">Forms</a>
-        </li> -->
-        <li class="nav-item" routerLinkActive="active-link">
-          <a class="nav-link" type="button" routerLink="user-home" *ngIf="menuType ==='user'">Home</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active-link">
-          <a class="nav-link float-end" type="button" (click)="logout()">LogOut</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light nb">
+  <a class="navbar-brand">Forms App</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse navbar-main" id="navbarNav">
+    <ul class="navbar-nav navbarul" *ngIf="isLoggedIn">
+      <li
+        class="nav-item"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="menuType === 'admin'"
+      >
+        <a class="nav-link aclass" routerLink="admin-home">Admin Home</a>
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="menuType === 'admin'"
+      >
+        <a class="nav-link aclass" routerLink="admin-home/create-form">Forms</a>
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="menuType === 'admin'"
+      >
+        <a class="nav-link aclass" routerLink="admin-home/view-forms"
+          >View Forms</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a
+          class="nav-link aclass"
+          type="button"
+          routerLink="user-home"
+          *ngIf="menuType === 'user'"
+          >Home</a
+        >
+      </li>
 
- 
-    <router-outlet>
-      
-    </router-outlet>
- 
+      <li
+        class="nav-item"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link aclass float-end" type="button" (click)="logout()"
+          >LogOut</a
+        >
+      </li>
+    </ul>
+    <li class="nav-item last">
+      <img
+        class="nav-link"
+        width="34"
+        height="34"
+        src="https://img.icons8.com/flat-round/64/back--v1.png"
+        alt="back--v1"
+        (click)="goBack()"
+        data-toggle="tooltip"
+        data-placement="bottom" 
+        title="Go Back"
+      />
+    </li>  
+  </div> 
+</nav>
+
+<router-outlet> </router-outlet>

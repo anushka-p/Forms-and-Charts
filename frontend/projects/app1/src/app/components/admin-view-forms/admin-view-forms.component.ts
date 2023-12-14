@@ -14,22 +14,30 @@ export class AdminViewFormsComponent {
   selectedForm: any | null = null;
   selectedStartDate: string = '';
   selectedEndDate: string = '';
+  currentPage:number=1;
+  itemsPerPage:number=5;
+  offset: number = 0;
+  totalItems: number = 0;
   constructor(
     private adminService: AdminService,
     private fileService: FileUploadServiceService
   ) {}
   ngOnInit(): void {
+    this.currentPage = 1;
+    this.itemsPerPage = 5;
     this.loadForms();
   }
 
   loadForms() {
     const token = localStorage.getItem('token');
     if (token) {
-      this.adminService.getForms(token).subscribe({
+      this.offset = ((this.currentPage - 1) * this.itemsPerPage);
+      this.adminService.getForms(token, this.itemsPerPage, this.offset).subscribe({
         next: (response) => {
           if (Array.isArray(response.data)) {
             this.forms = [...response.data];
           }
+          this.totalItems = response.totalItems;
         },
         error: (err) => {},
       });
@@ -57,6 +65,12 @@ export class AdminViewFormsComponent {
   }
   onPageChange(page: number) {
     console.log(page);
+    this.currentPage = page;
+    this.loadForms();
+  }
+  onItemsPerPageChange() {
+    this.currentPage = 1; 
+    this.loadForms(); 
   }
 
   exportCsv(fid: number, ftitle: string) {
@@ -101,7 +115,7 @@ export class AdminViewFormsComponent {
           } else {
             console.error('Unexpected response format. Expected a CSV string.');
           }
-        },
+        }, 
         (error) => {
           console.error(error);
         }

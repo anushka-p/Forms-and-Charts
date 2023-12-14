@@ -3,6 +3,11 @@
     background: #f5f5f5;
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
+    height: 800px;
+    display: flex;
+}
+table{
+    height: 600px;
 }
 .table-wrapper {
     background: #fff;
@@ -10,6 +15,10 @@
     margin: 30px 0;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    height: 750px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
 }
 .table-title {        
     padding-bottom: 15px;
@@ -127,4 +136,24 @@ input{
     margin-top: 10px;
     margin-left: 15px;
     border-radius: 5px;
+}
+.pagination{
+    display: flex;
+    justify-content: flex-end;
+}
+.items-per-page-dropdown{
+    width: 250px;
+    font-size: 18px;
+    margin: 3px;
+}
+select{
+    margin-left: 10px;
+    width: 50px;
+}
+.page-controls{
+    padding: 5px;
+    color: gray;
+}
+img, i{
+    cursor: pointer;
 }

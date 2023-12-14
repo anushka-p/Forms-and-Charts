@@ -1,113 +1,110 @@
-@import 'https://code.highcharts.com/5/css/highcharts.css';
+@import "https://code.highcharts.com/5/css/highcharts.css";
 
 .highcharts-plot-background {
-	fill: #555651;
+  fill: #555651;
 }
 .highcharts-plot-border {
-	stroke-width: 2px;
-	stroke: #7cb5ec;
+  stroke-width: 2px;
+  stroke: #7cb5ec;
 }
-.controls,.main-area{
-    border: 1px solid black;
-    margin-top: 15px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 10px;
-    /* background-color: #99cce6; */
+.controls,
+.main-area {
+  border: 1px solid black;
+  margin-top: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  /* background-color: #99cce6; */
 }
-.controls-container{
-    padding: 5px;
-    /* margin: 5px; */
-    /* background-color: #d1ebfa; */
+.controls-container {
+  padding: 5px;
+  max-height: 200px;
+  overflow: auto;
 }
-.heading{
-    display: flex;
-    justify-content: center;
-    /* background-color: #d1ebfa; */
-}
-.custom-btn{
-    /* background-color: #C3ACD0; */
-}
-.main-area{
-    height: 700px;
-    /* background-color: #DDF2FD; */
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-}
-/* .axis,.chart,.x-axis,.y-axis{
-    border: 1px solid red;
-} */
-.axis{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    height: 700px;
-    /* background-color: #d1ebfa; */
-}
-.x-axis,.y-axis,.customize{
- margin: auto;
- border-radius: 10px;
- box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.x-axis,.y-axis{
-    /* background-color: #DDF2FD; */
+.heading {
+  display: flex;
+  justify-content: center;
 }
 
-p{
-    padding: 5px;
+.main-area {
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  /* overflow: auto; */
 }
-.noselection{
-    display: flex;
-    justify-content: center;
-    margin: 50px;
-    border: 1px solid black; 
-    border-radius: 10px;
-    height: 400px;
+
+.axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 700px;
 }
-.msg{
-    /* border: 1px solid black; */
-    margin: 30px;
-    font-size:xx-large;
-    font-weight: bold;
-    padding: 100px;
+.x-axis,
+.y-axis,
+.customize {
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.custom-icon{
-    color:dimgrey;
-    border-radius: 50%;
-    padding: 2px;
+p {
+  padding: 5px;
 }
-.customize{
- border: 1px solid black;
- border-radius: 5px;
- cursor: pointer;
- width: 121px;
- height: 61px;
- color: white;
- background-color: #192655;
+.noselection {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 400px;
 }
-.x-custom{
-    border: 1px solid black;
-    margin: 30px;
-    height: 500px;
-    background-color: #ebf2f6;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    z-index: 2;
+.msg {
+  margin: 30px;
+  font-size: xx-large;
+  font-weight: bold;
+  padding: 100px;
 }
-.x-custom input, label, select,h2,button{
-    padding: 10px;
-    margin: 10px;
+.custom-icon {
+  color: dimgrey;
+  border-radius: 50%;
+  padding: 2px;
 }
-.charts-area{
-    margin: 10px;
-    height: 600px;
+.customize {
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 121px;
+  height: 61px;
+  color: white;
+  background-color: #192655;
 }
-.custom-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
-    /* background-color: #D2E0FB; */
+.x-custom {
+  border: 1px solid black;
+  margin: 30px;
+  height: 500px;
+  background-color: #ebf2f6;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  z-index: 2;
+}
+.x-custom input,
+label,
+select,
+h2,
+button {
+  padding: 10px;
+  margin: 10px;
+}
+.charts-area {
+  margin: 10px;
+  height: 600px;
+}
+.custom-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+.filename{
+  /* text-decoration: none; */
+  color:cadetblue;
 }

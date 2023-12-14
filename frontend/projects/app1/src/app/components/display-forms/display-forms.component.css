@@ -1,8 +1,8 @@
 .parent{
 	background-color: #ede7f7;
 	font-family: Roboto,Sans-serif;
-  /* height: fit-content; */
-  overflow: scroll;
+	height: 800px;
+    overflow: auto;
 }
 .form{
 	height: 900px;
@@ -81,6 +81,36 @@ color: red;
  margin-left: 20px;
  display: block;
 }
-.checkbox{
-width: 55px !important;
+.check-box{
+/* width: 55px !important; */
+margin-left: 40px;
+}
+.text-div{
+	display: flex;
+}
+.checklist{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.check-div{
+	display: flex;
+	justify-content: flex-start;
+}
+
+.check{
+	width: 40px !important;
+}
+textarea{
+	width: 500px;
+	height: 100px;
+	overflow: auto;
+	resize: none;
+}
+.dpdown{
+	display: flex;
+}
+select{
+	width: 200px;
+	height: 25px;
 }

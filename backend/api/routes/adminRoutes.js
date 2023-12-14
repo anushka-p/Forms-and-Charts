@@ -6,10 +6,8 @@ const {
   getForm,
   updateForm,
   deleteForm,
-  addNewUserFormSubmission,
   getSubmittedForm,
   formControlResponse,
-  otherFormSubmission,
   checkIfUserCanSubmit,
   downloadCsv,
 } = require("../controllers/adminController");
@@ -17,10 +15,9 @@ router.get("/view-all", verifyToken, verifyAdmin, getAll);
 router.post("/add-form", verifyToken, verifyAdmin, addNewForm);
 router.post("/download-csv",verifyToken, verifyAdmin,  downloadCsv);
 router.get("/form/:id", verifyToken, getForm);
-router.get("/get-form", verifyToken, getForm);
+router.get("/get-form/:limit/:offset", verifyToken, getForm);
 // router.patch('/form/:id', verifyToken, verifyAdmin, updateForm);
 router.patch("/delete-form/:formid", verifyToken, deleteForm);
-router.post("/submit-new-form/:id", verifyToken, addNewUserFormSubmission);
 router.get("/get-submitted-forms/:userid", verifyToken, getSubmittedForm); //register endpoint
 router.get(
   "/get-submitted-formcontrol/:userid/:formid/:submissionId?",
@@ -28,7 +25,6 @@ router.get(
   formControlResponse
 );
 // router.get('/get-submitted-formdate/:userid/:formid', verifyToken, formDate)
-router.get("/other-submissions/:id/:userid", verifyToken, otherFormSubmission);
 router.post("/check-ability", verifyToken, checkIfUserCanSubmit);
 
 module.exports = router;

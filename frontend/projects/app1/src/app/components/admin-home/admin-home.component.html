@@ -4,7 +4,7 @@
       <div class="table-title">
         <div class="row">
           <div class="col-sm-6">
-            <h2>Manage <b>Users</b></h2>
+            <h2><b>Manage Users</b></h2>
           </div>
           <div class="col-sm-6">
             <a
@@ -12,8 +12,7 @@
               data-toggle="modal"
               routerLink="create-user"
               ><i class="fa fa-plus" aria-hidden="true"></i
-              ><span>Add New User</span></a
-            >   
+              ><span>Add New User</span></a>   
           </div>
         </div>
       </div>
@@ -32,11 +31,11 @@
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th>Serial Number</th>
-            <th  class="sortable">Username <i (click)="onSort('username')" class="fa fa-sort"></i> </th>
-            <th  class="sortable">User Email <i (click)="onSort('useremail')" class="fa fa-sort"></i> </th>
-            <th  class="sortable">User Role <i (click)="onSort('role')" class="fa fa-sort"></i> </th>
-            <th>Actions</th>
+            <th class="col-sm-1">Serial Number</th>
+            <th  class="sortable col-sm-3">Username <i (click)="onSort('username')" class="fa fa-sort"></i> </th>
+            <th  class="sortable col-sm-3">User Email <i (click)="onSort('useremail')" class="fa fa-sort"></i> </th>
+            <th  class="sortable col-sm-2">User Role <i (click)="onSort('role')" class="fa fa-sort"></i> </th>
+            <th class="col-sm-4">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -47,22 +46,31 @@
             <td>{{ user.role }}</td>
             <td>
               <button class="btn btn-link" routerLink="edit-user/{{ user.id }}">
-                <i class="fa fa-pencil"></i>
+                <img width="24" height="24" src="https://img.icons8.com/material-sharp/24/edit.png" alt="edit"/>
               </button>
               <button class="btn btn-link" (click)="deleteUser(user.id)">
-                <i class="fa fa-trash"></i>
+                <img width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/filled-trash.png" alt="filled-trash"/>
               </button>
             </td>
           </tr>
         </tbody>
-        
       </table>
 
-      <pagination-controls 
- 
-  (pageChange)="onPageChange($event)"
-  class="float-end mb-3 pagination">
-</pagination-controls>
+      <div class="pagination">
+        <div class="items-per-page-dropdown">
+          <label for="itemsPerPage">Items Per Page:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <pagination-controls
+          (pageChange)="onPageChange($event)"
+          class="float-end mb-3 page-controls"
+        >
+        </pagination-controls>
+      </div>
 </div>
   </div>
 </div>

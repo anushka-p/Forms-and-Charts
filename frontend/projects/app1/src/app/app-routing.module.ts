@@ -9,7 +9,7 @@ import { IsAuthGuard } from './services/auth-guard.service';
 import { EditOrCreateUserComponent } from './components/edit-or-create-user/edit-or-create-user.component';
 import { RoughComponent } from './components/rough/rough.component';
 import { FormsComponent } from './components/forms/forms.component';
-import { SubmittedFormsComponent } from './components/submitted-forms/submitted-forms.component';
+// import { SubmittedFormsComponent } from './components/submitted-forms/submitted-forms.component';
 import { ToSubmitFormsComponent } from './components/to-submit-forms/to-submit-forms.component';
 import { DisplayFormsComponent } from './components/display-forms/display-forms.component';
 import { OtherSubmissionsComponent } from './components/other-submissions/other-submissions.component';
@@ -17,13 +17,17 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { AdminViewFormsComponent } from './components/admin-view-forms/admin-view-forms.component';
 const routes: Routes = [
   {
-    path:'',
-    component: LoginComponent
-  },
-  {
     path: 'home',
     component: LayoutComponent,
     children: [
+      {
+        path:'login',
+        component: LoginComponent
+      },
+      {
+        path:'register',
+        component: RegisterComponent
+      },
       {
         path: 'admin-home',
         component: AdminHomeComponent, canActivate: [IsAuthGuard],
@@ -53,10 +57,6 @@ const routes: Routes = [
         component: UserHomeComponent, canActivate: [IsAuthGuard]
       },
       {
-        path: 'user-home/submitted-forms', 
-        component: SubmittedFormsComponent
-      },
-      {
         path: 'user-home/submitted-forms/:id', 
         component: DisplayFormsComponent
       },
@@ -82,10 +82,6 @@ const routes: Routes = [
   {
     path: 'rough',
     component: RoughComponent
-  },
-  {
-    path:'register',
-    component: RegisterComponent
   },
   {
     path: 'upload-file',

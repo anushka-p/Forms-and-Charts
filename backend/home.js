@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const dbmigrate = require('db-migrate');
 const path = require('path');
 
-// Create Express app
+// Express app
 const app = express();
 
 // Apply middleware

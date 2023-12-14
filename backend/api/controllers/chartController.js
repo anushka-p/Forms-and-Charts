@@ -75,7 +75,7 @@ const getAvailableFiles = (req, res) => {
     const csvFiles = files.filter((file) => file.endsWith(".csv"));
     res.json({ files: csvFiles });
   });
-}; //it is okay
+};
 
 // const getChartData = (req, res) => {
 //   const { xAxis, yAxis, filename } = req.body;
@@ -94,25 +94,17 @@ const getAvailableFiles = (req, res) => {
 
 const getChartData = (req, res) => {
   const { xAxis, yAxis, filename } = req.body;
-
-  // Load the required modules
   const _ = require('lodash');
 
   csvdb(`./uploads/${filename}`).then(function (db) {
     db.find().then(function (records) {
-      // Group records by x-axis values
       const groupedData = _.groupBy(records, xAxis);
-      // console.log(groupedData, "groupdata");         
-      // Calculate the sum of y-axis values for each group
       const resultData = _.mapValues(groupedData, group => {
         const sum = _.sumBy(group, record =>{const yValue = parseInt(record[yAxis])
         return isNaN(yValue) ? 0 : yValue});
-       
         return sum;
-        
       });
 
-      // Convert the result to arrays for x-axis and y-axis
       const xaxisPoints = Object.keys(resultData);
       const yaxisPoints = Object.values(resultData);
       // console.log(xaxisPoints, "xval");

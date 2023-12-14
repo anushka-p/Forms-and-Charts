@@ -9,10 +9,10 @@ function isLoggedIn(req,res,next){
 
 router.get('/', getGoogleProfile);
 router.get('/auth/google', passport.authenticate('google', {scope: ['email', 'profile']}));
-// router.get('/google/callback', handleGoogleCallback);
-// router.get('/auth/failure', handleGoogleFailure);
-// router.get('/protected', isLoggedIn, handleProtectedRoute);
-// router.get('/logout', handleLogout);
-// router.get('/profile', getProfile);
+router.get('/google/callback', handleGoogleCallback);
+router.get('/auth/failure', handleGoogleFailure);
+router.get('/protected', isLoggedIn, handleProtectedRoute);
+router.get('/logout', handleLogout);
+router.get('/profile', getProfile);
 
 module.exports = router;

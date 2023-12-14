@@ -18,8 +18,8 @@ export class AuthService {
   {
     return this.http.post<any>(`${this.apiUrl}/signup`, {useremail, password, state, role, username,createdby,updatedby})
   }
-  registerWithGoogle(): Observable<any> {
-    return this.http.get<any>(`${this.gogUrl}/auth/google`)
-  }
+ 
+
+
   
 }

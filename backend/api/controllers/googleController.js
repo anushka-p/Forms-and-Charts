@@ -12,7 +12,7 @@ function getGoogleProfile(req,res){
        res.json({"message":`Hello ${req.user.displayName}! <a href="/logout">Logout</a>`});
     }
     else{
-        res.redirect('http://localhost:3000/gog/auth/google');
+        res.redirect('http://localhost:3000/gog/auth/google'); //frontend
     }
 }
 
@@ -21,13 +21,12 @@ function handleGoogleCallback(req, res) {
         if (err) {
             return res.status(500).json({ message: 'Internal Server Error' });
         }
-
         if (!user) {
             return res.status(401).json({ message: 'Authentication Failed' });
         }
-
-        // If authentication succeeds, you can send a success response
-        return res.status(200).json({ message: 'Authentication Successful', user });
+        const accessToken = user.accessToken;
+        const redirectUrl = `http://localhost:4200/app1/?access_token=${accessToken}`;
+        res.redirect(redirectUrl);
     })(req, res);
 }
 
